@@ -284,11 +284,15 @@ class SignLanguageTranslator:
 
         return data
 
-    def translate(self, pose_data: dict) -> str:
+    def translate(self, pose_data: dict, video_path: str = None) -> str:
         """执行手语翻译"""
         # 创建在线数据集
         online_data = S2T_Dataset_online(args=self.args)
         online_data.pose_data = pose_data
+
+        # RGB 模式需要设置视频路径
+        if self.rgb_support and video_path:
+            online_data.rgb_data = video_path
 
         # 创建数据加载器
         online_sampler = torch.utils.data.SequentialSampler(online_data)
@@ -1011,9 +1015,9 @@ async def translate_video(
             print(f"正在提取视频姿态: {file.filename}")
             pose_data = translator.extract_pose_from_video(tmp_path)
 
-            # 执行翻译
+            # 执行翻译（传入视频路径以支持RGB模式）
             print("正在执行翻译...")
-            result_text = translator.translate(pose_data)
+            result_text = translator.translate(pose_data, video_path=tmp_path)
 
             return TranslateResponse(
                 success=True,
@@ -1074,9 +1078,9 @@ async def translate_image(
             print(f"正在提取图片姿态: {file.filename}")
             pose_data = translator.extract_pose_from_image(tmp_path)
 
-            # 执行翻译
+            # 执行翻译（传入视频路径以支持RGB模式）
             print("正在执行翻译...")
-            result_text = translator.translate(pose_data)
+            result_text = translator.translate(pose_data, video_path=tmp_path)
 
             return TranslateResponse(
                 success=True,
