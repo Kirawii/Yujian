@@ -1,0 +1,54 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# IDE
+*.swp
+*.swo
+.vscode/
+.idea/
+.DS_Store
+
+# Model weights
+*.pth
+*.bin
+*.ckpt
+
+# Logs
+wandb/
+log/
+*.log
+
+# Data
+data/
+*.mp4
+*.jpg
+*.png
+
+# Outputs
+out/
+backup/
+static/wavs/
+speaker/
+
+# Other
+*.xlsx
+*.json
+!config.json
+!generation_config.json
+
+# Directories to ignore
+EmoLLM/
+pretrained_weight/
+speaker/
+static/wavs/
+tts_env/
+__pycache__/
+.ipynb_checkpoints/
