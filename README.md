@@ -1,118 +1,278 @@
-<h3 align="center"><a href="" style="color:#9C276A">
-Uni-Sign: Toward Unified Sign Language Understanding at Scale</a></h3>
-<h5 align="center"> 
-If our project helps you, please give us a star🌟 on GitHub, that would motivate us a lot!
-</h2>
+<h1 align="center">语见 (YuJian)</h1>
+<p align="center">
+  <strong>面向聋哑人群体的智能手语翻译与心理支持系统</strong>
+</p>
 
-<h5 align="center">
+<p align="center">
+  <a href="#">
+    <img src="https://img.shields.io/badge/Python-3.10+-blue.svg" alt="Python">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/PyTorch-2.8+-red.svg" alt="PyTorch">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/FastAPI-现代Web框架-green.svg" alt="FastAPI">
+  </a>
+  <a href="#">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License">
+  </a>
+</p>
 
-[![arXiv](https://img.shields.io/badge/Arxiv-2501.15187-AD1C18.svg?logo=arXiv)](https://arxiv.org/abs/2501.15187) 
-[![CSL-Dataset](https://img.shields.io/badge/HuggingFace🤗-%20CSL%20News%20RGB%20Format-blue.svg)](https://huggingface.co/datasets/ZechengLi19/CSL-News)
-[![CSL-Dataset](https://img.shields.io/badge/BaiDu☁-%20CSL%20News%20RGB%20Format-green.svg)](https://pan.baidu.com/s/17W6kIreNMHYtD4y2llKmDg?pwd=ncvo)
-[![CSL-Dataset](https://img.shields.io/badge/HuggingFace🤗-%20CSL%20News%20Pose%20Format-yellow.svg)](https://huggingface.co/datasets/ZechengLi19/CSL-News_pose)
-[![Model-Checkpoints](https://img.shields.io/badge/HuggingFace🤗-%20Model%20Checkpoints-purple.svg)](https://huggingface.co/ZechengLi19/Uni-Sign) 
+---
 
+## 🎯 项目介绍
 
-[//]: # ([![PWC]&#40;https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/uni-sign-toward-unified-sign-language/sign-language-recognition-on-ms-asl&#41;]&#40;https://paperswithcode.com/sota/sign-language-recognition-on-ms-asl?p=uni-sign-toward-unified-sign-language&#41;)
+**语见**是一款专为聋哑人群体设计的智能服务系统，融合手语翻译、心理支持和语音合成技术，搭建聋哑人与外界沟通的桥梁。
 
-[//]: # ([![PWC]&#40;https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/uni-sign-toward-unified-sign-language/sign-language-recognition-on-wlasl100&#41;]&#40;https://paperswithcode.com/sota/sign-language-recognition-on-wlasl100?p=uni-sign-toward-unified-sign-language&#41;)
+> 💡 **为什么叫"语见"？**
+> 
+> "语"代表语言、沟通，"见"代表看见、理解。我们希望让每一份手语都能被"看见"，让每一个声音都能被"听见"。
 
-[//]: # ([![PWC]&#40;https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/uni-sign-toward-unified-sign-language/sign-language-recognition-on-wlasl-2000&#41;]&#40;https://paperswithcode.com/sota/sign-language-recognition-on-wlasl-2000?p=uni-sign-toward-unified-sign-language&#41;)
+---
 
-[//]: # ([![PWC]&#40;https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/uni-sign-toward-unified-sign-language/sign-language-recognition-on-csl-daily&#41;]&#40;https://paperswithcode.com/sota/sign-language-recognition-on-csl-daily?p=uni-sign-toward-unified-sign-language&#41;)
+## ✨ 核心功能
 
-[//]: # ([![PWC]&#40;https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/uni-sign-toward-unified-sign-language/gloss-free-sign-language-translation-on-csl&#41;]&#40;https://paperswithcode.com/sota/gloss-free-sign-language-translation-on-csl?p=uni-sign-toward-unified-sign-language&#41;)
+### 🤟 手语翻译
+- **视频翻译**：上传手语视频，自动识别并转换为文字
+- **图片翻译**：支持单张手语图片识别
+- **姿态提取**：基于 RTMLib 的轻量级姿态估计
+- **支持数据集**：CSL Daily、CSL News
 
-[//]: # ([![PWC]&#40;https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/uni-sign-toward-unified-sign-language/gloss-free-sign-language-translation-on-2&#41;]&#40;https://paperswithcode.com/sota/gloss-free-sign-language-translation-on-2?p=uni-sign-toward-unified-sign-language&#41;)
+### 🧠 智能心理支持 (EmoLLM)
+- **心理健康咨询**：基于 EmoLLM 大模型的专业心理支持
+- **RAG 知识增强**：融合心理学知识库，提供专业建议
+- **手语友好设计**：理解手语语序特点，不纠正语法
+- **温柔共情回复**：亲切、可爱的沟通风格
 
-[//]: # ([![PWC]&#40;https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/uni-sign-toward-unified-sign-language/gloss-free-sign-language-translation-on-3&#41;]&#40;https://paperswithcode.com/sota/gloss-free-sign-language-translation-on-3?p=uni-sign-toward-unified-sign-language&#41;)
-</h5>
+### 🔊 语音合成 (TTS)
+- **ChatTTS 集成**：高质量中文语音合成
+- **多种音色**：8+ 种预设音色可选
+- **独立服务架构**：避免依赖冲突，稳定运行
+- **自动转发**：主 API 端口统一对外服务
 
-![Uni-Sign](docs/framework.png)
+---
 
-## 💥 News
-[2025/1/25] This [paper](https://openreview.net/pdf?id=0Xt7uT04cQ) is accepted by `ICLR 2025` 🎉🎉!
+## 🏗️ 系统架构
 
-[2025/2/24] Release CSL-News dataset and code implementation.
+```
+┌─────────────────────────────────────────────────────────────┐
+│                        语见 API (端口 6006)                  │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐  │
+│  │  手语翻译     │  │  EmoLLM 咨询  │  │   TTS 转发       │  │
+│  │  (Uni-Sign)  │  │  (RAG + LLM) │  │  (→ 端口 6009)   │  │
+│  └──────────────┘  └──────────────┘  └──────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                   TTS 独立服务 (端口 6009)                   │
+│              (PyTorch 2.2 + ChatTTS 隔离环境)                │
+└─────────────────────────────────────────────────────────────┘
+```
 
-[2025/6/5] Release lighter pose extraction and online inference implementation. Check it out [here](./demo/README.md) 🎊🎊. 
+---
 
-[2025/12/20] Release pose-only checkpoints and inference code for How2Sign and OpenASL. We hope this will be useful to researchers interested in ASL. Check it out [here](https://huggingface.co/ZechengLi19/Uni-Sign) 👏👏.
+## 🚀 快速开始
 
+### 环境要求
+- Python 3.10+
+- CUDA 12.8+
+- 显存：16GB+ (推荐 24GB)
 
-## 🛠️ Installation
-We suggest to create a new conda environment. 
+### 安装步骤
+
+1. **克隆仓库**
 ```bash
-# create environment
-conda create --name Uni-Sign python=3.9
-conda activate Uni-Sign
-# install other relevant dependencies
+git clone git@github.com:Kirawii/Yujian.git
+cd Yujian
+```
+
+2. **安装主环境依赖**
+```bash
 pip install -r requirements.txt
-# (Optional) If you want to evaluate BLEURT scores on the How2Sign or OpenASL datasets
-git clone https://github.com/google-research/bleurt.git
-cd bleurt
-pip install .
-cd ../
-wget https://storage.googleapis.com/bleurt-oss-21/BLEURT-20.zip .
-unzip BLEURT-20.zip
+pip install -r api_requirements.txt
 ```
 
-## 📖 Preparation
-Please follow the instructions provided in [DATASET.md](./docs/DATASET.md) for data preparation.
-
-## 💻 Model Checkpoints
-The Uni-Sign checkpoints are available for download [Here](https://huggingface.co/ZechengLi19/Uni-Sign/tree/main).
-
-## 🔨 Training & Evaluation
-All scripts must be executed within the Uni-Sign directory. 
-
-For the pre-training code, please refer to [Issue #15](https://github.com/ZechengLi19/Uni-Sign/issues/15) for detailed instructions. Thanks to [@williams-bert](https://github.com/williams-bert) for generously sharing the [code implementation](https://github.com/williams-bert/Uni-Sign/blob/main/pre_training.py).
-### Training
-**Stage 1**: pose-only pre-training.
+3. **配置 TTS 独立服务**
 ```bash
-bash ./script/train_stage1.sh
+# 创建 TTS 虚拟环境
+python -m venv tts_env
+source tts_env/bin/activate
+
+# 安装 TTS 依赖 (PyTorch 2.2 以避免冲突)
+pip install torch==2.2.0 torchaudio==2.2.0
+pip install ChatTTS fastapi uvicorn
+
+deactivate
 ```
-**Stage 2**: RGB-pose pre-training.
+
+4. **下载模型权重**
 ```bash
-bash ./script/train_stage2.sh
+# 手语翻译模型 (CSL Daily)
+mkdir -p pretrained_weight
+# 下载地址: https://huggingface.co/ZechengLi19/Uni-Sign
+
+# EmoLLM 模型
+# 下载地址: /home/xtk/models/haiyangpengai/careyou_7b_16bit_v3_2_qwen14_4bit
 ```
-**Stage 3**: downstream fine-tuning.
+
+5. **启动服务**
 ```bash
-bash ./script/train_stage3.sh
+# 一键启动所有服务
+./start_all.sh
+
+# 或手动分别启动
+# 1. 启动 TTS 服务
+source tts_env/bin/activate
+uvicorn tts_server:app --host 0.0.0.0 --port 6009
+
+# 2. 启动主 API
+./start.sh
 ```
 
-### Evaluation
-After completing stage 3 fine-tuning, performance evaluation on a single GPU can be performed using the following command:
+---
+
+## 📡 API 接口
+
+### 健康检查
 ```bash
-bash ./script/eval_stage3.sh
+curl http://localhost:6006/health
 ```
 
-## 🎨 Inference Results
-If you'd like to skip the environment setup and model weight configuration, you can find sample pose-only sign language translation results (stage 2) [Here](./out) for quick comparison.
-
-## 👨‍💻 Todo
-- [x] Release CSL-News dataset
-- [x] Release Uni-Sign implementation 
-- [x] Release pose extraction and online inference implementation
-
-## 📮 Contact
-If you have any questions, please feel free to contact Zecheng Li (lizecheng19@gmail.com). Thank you.
-
-## 👍 Acknowledgement
-The codebase of Uni-Sign is adapted from [GFSLT-VLP](https://github.com/zhoubenjia/GFSLT-VLP), while the implementations of the pose/temporal encoders are derived from [CoSign](https://openaccess.thecvf.com/content/ICCV2023/papers/Jiao_CoSign_Exploring_Co-occurrence_Signals_in_Skeleton-based_Continuous_Sign_Language_Recognition_ICCV_2023_paper.pdf). We sincerely appreciate the authors of CoSign for personally sharing their code 🙏. \
-We are also grateful for the following projects our Uni-Sign arise from:
-* 🤟[SSVP-SLT](https://github.com/facebookresearch/ssvp_slt): a excellent sign language translation framework! 
-* 🏃️[MMPose](https://github.com/open-mmlab/mmpose): an open-source toolbox for pose estimation.
-* 🤠[FUNASR](https://github.com/modelscope/FunASR): a high-performance speech-to-text toolkit.
-
-
-## 📑 Citation
-If you find Uni-Sign useful for your research and applications, please cite using this BibTeX:
+### 手语翻译 - 视频
+```bash
+curl -X POST "http://localhost:6006/translate/video" \
+  -F "file=@example.mp4"
 ```
-@article{li2025uni,
-  title={Uni-Sign: Toward Unified Sign Language Understanding at Scale},
-  author={Li, Zecheng and Zhou, Wengang and Zhao, Weichao and Wu, Kepeng and Hu, Hezhen and Li, Houqiang},
-  journal={arXiv preprint arXiv:2501.15187},
-  year={2025}
-}
+
+### 手语翻译 - 图片
+```bash
+curl -X POST "http://localhost:6006/translate/image" \
+  -F "file=@example.jpg"
 ```
+
+### 心理咨询对话
+```bash
+curl -X POST "http://localhost:6006/chat" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [{"role": "user", "content": "我最近感到很焦虑"}],
+    "max_new_tokens": 512
+  }'
+```
+
+### 语音合成 (TTS)
+```bash
+curl -X POST "http://localhost:6006/tts" \
+  -F "text=你好，我是语见助手" \
+  -F "voice=2222" \
+  --output output.wav
+```
+
+📖 **完整 API 文档**: [API_DOCUMENTATION.md](./API_DOCUMENTATION.md)
+
+---
+
+## 📁 项目结构
+
+```
+Yujian/
+├── api.py                  # 主 API 服务
+├── tts_server.py           # TTS 独立服务
+├── models.py               # Uni-Sign 模型定义
+├── datasets.py             # 数据集处理
+├── config.py               # 配置文件
+├── utils.py                # 工具函数
+├── start.sh                # 启动主 API
+├── start_all.sh            # 一键启动所有服务
+├── stop.sh                 # 停止服务
+├── status.sh               # 查看服务状态
+├── tts_env/                # TTS 虚拟环境
+├── pretrained_weight/      # 模型权重
+├── speaker/                # 音色文件
+├── static/wavs/            # 生成的音频
+└── demo/                   # 演示代码
+```
+
+---
+
+## 🛠️ 技术栈
+
+| 模块 | 技术 |
+|------|------|
+| 手语翻译 | Uni-Sign、RTMLib、ST-GCN |
+| 心理咨询 | EmoLLM (Qwen2)、RAG (FAISS)、LangChain |
+| 语音合成 | ChatTTS、FastAPI |
+| Web 框架 | FastAPI、Uvicorn |
+| 深度学习 | PyTorch 2.8 (主) / 2.2 (TTS) |
+| 向量数据库 | FAISS |
+| 姿态估计 | RTMPose、YOLOX |
+
+---
+
+## 📝 配置说明
+
+### 环境变量
+```bash
+# 模型路径
+export CHECKPOINT_PATH="./pretrained_weight/best_model.pth"
+export EMOLLM_MODEL_PATH="/path/to/careyou_7b"
+export EMOLLM_TOKENIZER_PATH="/path/to/qwen_tokenizer"
+
+# 设备配置
+export DEVICE="cuda"
+export ENABLE_TTS="true"
+export ENABLE_EMOLLM="true"
+```
+
+### 端口配置
+- `6006` - 主 API 服务（对外暴露）
+- `6009` - TTS 独立服务（内部转发）
+
+---
+
+## 🎓 团队成员
+
+本项目由以下成员共同开发：
+
+| 姓名 | 职责 |
+|------|------|
+| 许桐恺 | 项目负责人、架构设计 |
+| 刘犇 | 模型开发、训练优化 |
+| 刘勇杰 | API 开发、部署运维 |
+| 李家豪 | 前端对接、测试验证 |
+| 任欣蕊 | 产品设计、文档编写 |
+
+---
+
+## 📄 开源协议
+
+本项目采用 [MIT License](LICENSE) 开源协议。
+
+---
+
+## 🙏 致谢
+
+本项目基于以下开源项目构建：
+
+- [Uni-Sign](https://github.com/ZechengLi19/Uni-Sign) - 手语翻译基础模型
+- [EmoLLM](https://github.com/EmoLLM) - 心理健康大模型
+- [ChatTTS](https://github.com/2noise/ChatTTS) - 语音合成
+- [RTMLib](https://github.com/Tau-J/rtmlib) - 姿态估计
+
+感谢所有开源贡献者！
+
+---
+
+## 📮 联系我们
+
+如有问题或建议，欢迎通过以下方式联系：
+
+- 📧 Email: [待补充]
+- 💬 Issue: [GitHub Issues](https://github.com/Kirawii/Yujian/issues)
+
+---
+
+<p align="center">
+  <strong>让沟通无障碍，让心灵有依靠 ❤️</strong>
+</p>
