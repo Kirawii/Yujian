@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# 启动 YuJian API + TTS 服务
+# 启动 语见 API + TTS 服务
 
 echo "========================================"
-echo "  YuJian API + TTS 服务启动脚本"
+echo "  语见 API + TTS 服务启动脚本"
 echo "========================================"
 echo ""
 

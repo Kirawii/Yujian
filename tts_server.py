@@ -13,7 +13,7 @@ from fastapi.responses import FileResponse, JSONResponse
 import ChatTTS
 import torch
 
-app = FastAPI(title="YuJian TTS Service")
+app = FastAPI(title="语见 TTS Service")
 
 # 全局 TTS 实例
 chat = None

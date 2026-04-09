@@ -17,7 +17,7 @@ export OMP_NUM_THREADS=4
 PORT=6006
 
 echo "========================================"
-echo "  YuJian API 启动脚本"
+echo "  语见 API 启动脚本"
 echo "========================================"
 echo ""
 

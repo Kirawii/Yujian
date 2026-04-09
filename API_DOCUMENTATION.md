@@ -1,10 +1,10 @@
-# YuJian 手语翻译 API 文档
+# 语见手语翻译 API 文档
 
 ## 基本信息
 
 | 项目 | 内容 |
 |------|------|
-| 服务名称 | YuJian 手语翻译 + EmoLLM 心理咨询服务 |
+| 服务名称 | 语见手语翻译 + EmoLLM 心理咨询服务 |
 | 基础地址 | `https://u895901-9072-0273df24.westc.seetacloud.com:8443` |
 | 协议 | HTTPS |
 | 请求格式 | `multipart/form-data` (文件上传) |

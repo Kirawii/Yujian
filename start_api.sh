@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# YuJian FastAPI 服务启动脚本
+# 语见 FastAPI 服务启动脚本
 
 # 设置环境变量
 export CUDA_VISIBLE_DEVICES=0
@@ -26,7 +26,7 @@ export EMOLLM_MODEL_PATH="/home/xtk/models/haiyangpengai/careyou_7b_16bit_v3_2_q
 export EMOLLM_TOKENIZER_PATH="/home/xtk/qwen_tokenizer/qwen/Qwen2-7B-Instruct"
 
 # 启动服务
-echo "启动 YuJian 手语翻译服务..."
+echo "启动 语见 手语翻译服务..."
 echo "检查点路径: $CHECKPOINT_PATH"
 echo "设备: $DEVICE"
 echo "数据集: $DATASET"

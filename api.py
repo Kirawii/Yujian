@@ -1,5 +1,5 @@
 """
-YuJian FastAPI 服务
+语见 FastAPI 服务
 支持图片/视频转文字（手语翻译）+ 语音合成
 """
 
@@ -25,7 +25,7 @@ from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.responses import JSONResponse, FileResponse
 from pydantic import BaseModel
 
-# 导入 YuJian 相关模块
+# 导入 语见 相关模块
 from models import Uni_Sign
 from datasets import S2T_Dataset_online, load_part_kp
 from config import *
@@ -839,7 +839,7 @@ class EmoLLMEngine:
 
 # 创建 FastAPI 应用
 app = FastAPI(
-    title="YuJian 手语翻译服务",
+    title="语见 手语翻译服务",
     description="支持图片/视频转文字的手语翻译 API",
     version="1.0.0"
 )
@@ -961,7 +961,7 @@ async def startup_event():
 async def root():
     """根路径，返回服务信息"""
     return {
-        "service": "YuJian 手语翻译 + EmoLLM 心理咨询服务",
+        "service": "语见 手语翻译 + EmoLLM 心理咨询服务",
         "version": "2.0.0",
         "endpoints": [
             "/translate/video - 上传视频进行手语翻译",
