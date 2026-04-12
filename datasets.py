@@ -157,9 +157,10 @@ def bbox_4hands(left_keypoints, right_keypoints, hw):
 
 def load_support_rgb_dict(tmp, skeletons, confs, full_path, data_transform):
     support_rgb_dict = {}
-    
-    confs = np.array(confs)
-    skeletons = np.array(skeletons) 
+
+    # 确保数据是规整的 numpy 数组
+    confs = np.array([np.array(c) for c in confs])
+    skeletons = np.array([np.array(s) for s in skeletons]) 
 
     # sample index of low scores
     left_confs_filter = confs[:,0,91:112].mean(-1)

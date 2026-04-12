@@ -4,7 +4,8 @@
 # 支持：手语翻译 + ChatTTS语音合成 + EmoLLM心理咨询
 
 # 配置
-export CHECKPOINT_PATH="./demo/pt/csl_daily_pose_only_slt.pth"
+export CHECKPOINT_PATH="./demo/pt/csl_daily_rgb_pose_slt.pth"
+export RGB_SUPPORT="true"
 export DEVICE="cuda"
 export ENABLE_TTS="true"
 export ENABLE_EMOLLM="true"
