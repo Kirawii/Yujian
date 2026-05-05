@@ -258,9 +258,22 @@ class SignLanguageTranslator:
             for f in tqdm(futures, desc="处理视频帧", total=len(vid_data)):
                 results.append(f.result())
 
+        valid_frames = 0
         for keypoints, scores, w_h in results:
-            data['keypoints'].append(keypoints / np.array(w_h)[None, None])
-            data['scores'].append(scores)
+            # 检查是否有有效的姿态检测（平均置信度 > 0.3）
+            avg_score = np.mean(scores) if scores is not None else 0
+            if avg_score > 0.3:
+                data['keypoints'].append(keypoints / np.array(w_h)[None, None])
+                data['scores'].append(scores)
+                valid_frames += 1
+            else:
+                # 低置信度帧仍添加，但标记为无效
+                data['keypoints'].append(keypoints / np.array(w_h)[None, None])
+                data['scores'].append(scores)
+
+        # 如果有效帧太少，提示未检测到手语
+        if valid_frames < len(results) * 0.3:  # 少于30%的帧有有效检测
+            print(f"[警告] 未检测到手语动作，有效帧: {valid_frames}/{len(results)}")
 
         return data
 
@@ -286,6 +299,13 @@ class SignLanguageTranslator:
 
     def translate(self, pose_data: dict, video_path: str = None) -> str:
         """执行手语翻译"""
+        # 验证姿态数据有效性
+        if 'scores' in pose_data and pose_data['scores']:
+            all_scores = np.array([s for scores in pose_data['scores'] for s in np.array(scores).flatten()])
+            avg_score = np.mean(all_scores) if len(all_scores) > 0 else 0
+            if avg_score < 0.2:
+                return "未检测到手语动作，请确保视频中包含清晰的手语手势"
+
         # 创建在线数据集
         online_data = S2T_Dataset_online(args=self.args)
         online_data.pose_data = pose_data
@@ -806,7 +826,7 @@ class EmoLLMEngine:
             do_sample=True,
             temperature=temp,
             top_p=tp,
-            repetition_penalty=1.1,
+            repetition_penalty=1.3,  # 提高重复惩罚，减少重复生成
             eos_token_id=151643,
             pad_token_id=self.tokenizer.pad_token_id,
             stopping_criteria=StoppingCriteriaList([stopper]),
@@ -837,6 +857,30 @@ class EmoLLMEngine:
             prev_line = line.strip() if line.strip() else prev_line
 
         response = '\n'.join(cleaned_lines).strip()
+
+        # 3. 段落级别去重：检测并移除重复的段落（相似度>80%）
+        paragraphs = response.split('\n\n')
+        unique_paragraphs = []
+        for para in paragraphs:
+            para_clean = para.strip()
+            if not para_clean:
+                continue
+            # 检查是否与已有段落相似
+            is_duplicate = False
+            for existing in unique_paragraphs:
+                # 简单相似度检查：如果前30个字符相同认为是重复
+                if len(para_clean) > 30 and len(existing) > 30:
+                    if para_clean[:30] == existing[:30]:
+                        is_duplicate = True
+                        break
+                # 或者完全相等
+                if para_clean == existing:
+                    is_duplicate = True
+                    break
+            if not is_duplicate:
+                unique_paragraphs.append(para_clean)
+
+        response = '\n\n'.join(unique_paragraphs)
 
         return response
 
