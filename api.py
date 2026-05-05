@@ -7,6 +7,7 @@ import os
 import sys
 import io
 import tempfile
+import shutil
 import cv2
 import numpy as np
 import torch
@@ -1291,6 +1292,131 @@ async def chat(request: ChatRequest):
             status_code=500,
             content={"response": f"Error: {str(e)}", "status": "error"}
         )
+
+
+@app.post("/translate/video_with_media")
+async def translate_video_with_media(
+    file: UploadFile = File(..., description="视频文件"),
+):
+    """
+    手语翻译 + 返回媒体文件（审核模式兼容）
+
+    - 审核期 (REVIEW_MODE=true): 返回关键帧图片序列 (base64编码的JSON)
+    - 上线后 (REVIEW_MODE=false): 返回视频文件
+    """
+    if translator is None:
+        return JSONResponse(
+            status_code=503,
+            content={"success": False, "text": "", "message": "翻译器未初始化", "media_type": None, "data": None}
+        )
+
+    # 检查文件类型
+    allowed_extensions = ['.mp4', '.avi', '.mov', '.mkv', '.flv', '.wmv']
+    file_ext = Path(file.filename).suffix.lower()
+    if file_ext not in allowed_extensions:
+        return JSONResponse(
+            status_code=400,
+            content={"success": False, "text": "", "message": f"不支持的文件格式: {file_ext}", "media_type": None, "data": None}
+        )
+
+    review_mode = os.environ.get("REVIEW_MODE", "false").lower() == "true"
+
+    try:
+        # 保存上传的文件
+        with tempfile.NamedTemporaryFile(delete=False, suffix=file_ext) as tmp_file:
+            content = await file.read()
+            tmp_file.write(content)
+            tmp_path = tmp_file.name
+
+        try:
+            # 提取姿态并翻译
+            print(f"正在处理视频: {file.filename}")
+            pose_data = translator.extract_pose_from_video(tmp_path)
+            result_text = translator.translate(pose_data, video_path=tmp_path)
+
+            if review_mode:
+                # 审核模式：返回关键帧图片 (base64编码)
+                print("[审核模式] 生成关键帧图片序列")
+                frames_dir = tempfile.mkdtemp()
+                frame_paths = extract_keyframes(tmp_path, frames_dir, num_frames=5)
+
+                # 读取图片并转为 base64
+                import base64
+                images_base64 = []
+                for frame_path in frame_paths:
+                    with open(frame_path, "rb") as img_file:
+                        img_base64 = base64.b64encode(img_file.read()).decode('utf-8')
+                        images_base64.append(img_base64)
+
+                # 清理临时文件
+                shutil.rmtree(frames_dir)
+                os.remove(tmp_path)
+
+                return JSONResponse(
+                    content={
+                        "success": True,
+                        "text": result_text,
+                        "message": "翻译成功",
+                        "media_type": "images",
+                        "review_mode": True,
+                        "images": images_base64
+                    }
+                )
+            else:
+                # 正常模式：返回视频文件
+                # 注意：这里仍然返回文件，但也可以改为返回URL
+                return FileResponse(
+                    tmp_path,
+                    media_type=f"video/{file_ext[1:]}",
+                    filename=f"translated_{file.filename}"
+                )
+
+        except Exception as e:
+            if os.path.exists(tmp_path):
+                os.remove(tmp_path)
+            raise e
+
+    except Exception as e:
+        print(f"处理失败: {e}")
+        import traceback
+        traceback.print_exc()
+        return JSONResponse(
+            status_code=500,
+            content={"success": False, "text": "", "message": f"处理失败: {str(e)}", "media_type": None, "data": None}
+        )
+
+
+def extract_keyframes(video_path: str, output_dir: str, num_frames: int = 5) -> list:
+    """从视频中提取关键帧"""
+    import cv2
+
+    cap = cv2.VideoCapture(video_path)
+    total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    # 均匀采样关键帧
+    frame_indices = [int(i * total_frames / num_frames) for i in range(num_frames)]
+
+    frame_paths = []
+    for i, frame_idx in enumerate(frame_indices):
+        cap.set(cv2.CAP_PROP_POS_FRAMES, frame_idx)
+        ret, frame = cap.read()
+        if ret:
+            frame_path = os.path.join(output_dir, f"frame_{i+1:02d}.jpg")
+            cv2.imwrite(frame_path, frame, [cv2.IMWRITE_JPEG_QUALITY, 85])
+            frame_paths.append(frame_path)
+
+    cap.release()
+    return frame_paths
+
+
+@app.get("/review_mode")
+async def get_review_mode():
+    """获取当前审核模式状态"""
+    review_mode = os.environ.get("REVIEW_MODE", "false").lower() == "true"
+    return {
+        "review_mode": review_mode,
+        "message": "审核模式" if review_mode else "正常模式"
+    }
 
 
 @app.get("/health")

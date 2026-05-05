@@ -9,6 +9,9 @@ export RGB_SUPPORT="true"
 export DEVICE="cuda"
 export ENABLE_TTS="true"
 export ENABLE_EMOLLM="true"
+
+# 微信小程序审核模式：true=返回图片序列(审核期), false=返回视频(上线后)
+export REVIEW_MODE="false"
 export EMOLLM_MODEL_PATH="/home/xtk/models/haiyangpengai/careyou_7b_16bit_v3_2_qwen14_4bit"
 export EMOLLM_TOKENIZER_PATH="/home/xtk/qwen_tokenizer/qwen/Qwen2-7B-Instruct"
 export HF_ENDPOINT=https://hf-mirror.com
